@@ -1,0 +1,12 @@
+figure{
+    width:148px; 
+    height:148px; 
+    border-radius:100%; 
+    display:inline-block;
+    margin-bottom: 15px;
+ }
+ figure img{
+        width:148px; 
+        height:148px; 
+        border-radius:100%; 
+ }
