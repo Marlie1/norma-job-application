@@ -8,7 +8,7 @@ import '../Assets/css/Modal.css'
 function GetList() {
     useEffect(() => {
         fetchItems();
-    });
+    },[]);
 
 
     const [movies, setMovies] = useState<any>([]);

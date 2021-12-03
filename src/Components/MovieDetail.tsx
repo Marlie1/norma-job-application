@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 function MovieDetail({ match }: any) {
     useEffect(() => {
         fetchItems();
-    });
+    },[]);
     
     const [movies, setMovies] = useState<any>([]);
     const [Id, setId] = useState<any>([]);
@@ -30,11 +30,34 @@ function MovieDetail({ match }: any) {
         fetchItems()
     }
     var settings = {
-        dots: true,
-        infinite: false,
+        dots: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 767,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
     };
     return (
         <div className="container d-flex flex-wrap mt-4 justify-content-center">
@@ -43,24 +66,24 @@ function MovieDetail({ match }: any) {
                     <figure><img className="card-img-top" style={{ width: "200px" }} src={`https://image.tmdb.org/t/p/original${movies.poster_path}`} alt="Card images cap" /></figure>
                     <div className="card-body w-100 text-left ">
                         <h5 className="card-title" ><b className="text-info">Title :</b> {movies.title}</h5>
-                        <p className="card-text"><b className="text-info">Overview :</b>{movies.overview}</p>
-                        <p className="card-text d-flex"><b className="text-info">Status :</b>
-                            {movies.status === 'Released' ? <h6 className="pl-2"><span className="badge badge-success ">{movies.status}</span></h6> : <h6 className="pl-2"><span className="badge badge-secondary ">{movies.status}</span></h6>}
-                        </p>
-                        {console.log(movies.vote_average*10)}
+                        <p className="card-text"><b className="text-info">Overview :</b> {movies.overview}</p>
+                        <span className="card-text d-flex"><b className="text-info">Status :</b>
+                            {movies.status === 'Released' ? <h6 className="pl-2"><span className="badge badge-success "> {movies.status}</span></h6> : <h6 className="pl-2"><span className="badge badge-secondary "> {movies.status}</span></h6>}
+                        </span>
                         <p className="card-text"><b className="text-info">Genres :</b>
                             {
                                 movies?.genres?.map((genres: any, index: number) =>
-                                    <span>{genres.name}{index + 1 < movies.genres.length && ', '}</span>
+                                    <span key={index}> {genres.name}{index + 1 < movies.genres.length && ', '}</span>
                                 )
                             }
                         </p>
                         <div className="position-relative w-100">
                             <div className="container">
+                                <h4 className="w-100 text-center mt-4">Similar Movies</h4>
                                 <Slider {...settings} >
                                     {
-                                        similar.map((movie: any) =>
-                                            <div className="d-flex p-4 col-md-12 col-lg-12 flex-wrap flex-1" key={movie.id}>
+                                        similar.map((movie: any,index:number) =>
+                                            <div className="d-flex p-4 col-md-12 col-lg-12 flex-wrap flex-1" key={index}>
                                                 <div className="card align-items-center fluid w-100 h-100 p-4"  >
                                                     <figure><img className="card-img-top" style={{ width: "100px" }} src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt="Card images cap" /></figure>
                                                     <div className="card-body p-0">
